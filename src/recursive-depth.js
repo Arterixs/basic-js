@@ -14,15 +14,15 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
  
 class DepthCalculator {
-  constructor(arr){this.arr = arr, this.count = 1, this.max = 0}
-  calculateDepth(arr = this.arr) {
+  calculateDepth(arr) {
+    console.log(arr)
+    let count = 1
   for (let item of arr) {
     if (Array.isArray(item)) {
-      this.max = Math.max(this.calculateDepth(item), this.max)
+      count = Math.max(this.calculateDepth(item) + 1)
     }
   }
-
-  return this.count + this.max
+  return count
   }
 }
 

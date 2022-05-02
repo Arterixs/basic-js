@@ -5,26 +5,43 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 const chainMaker = {
+  result: [],
+  res : "",
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.result.length
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value) {
+    this.result.push("~" + "( " + value + " )" + "~")
+    return this
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+    if (typeof(position) !== "number" || isNaN(position) || position > this.result.length || Number.isInteger(position) === false || position <= 0) {
+      this.result.splice(0, this.result.length)
+      throw new Error('You can\'t remove incorrect link!')
+    } else {
+      this.result.splice(position - 1,1)
+      return this
+    }
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    this.result.reverse()
+    return this
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (this.result.length === 1) {
+      this.result.splice(0,1, this.result[0].replace(/~/g, "") )
+      this.res = this.result.join("")
+      this.result.splice(0, this.result.length)
+      return this.res
+    } else {
+    this.result.splice(0,1, this.result[0].replace(/~/, "") )
+    this.result.splice(-1, 1, "~" + this.result[this.result.length-1].replace(/~/g, ""))
+    this.res = this.result.join("")
+    this.result.splice(0, this.result.length)
+   return this.res
+    }
   }
+  
 };
 
 module.exports = {
